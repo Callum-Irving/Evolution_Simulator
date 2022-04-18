@@ -12,11 +12,11 @@ class World {
     this.food = new ArrayList<FoodPellet>(numFood);
     this.population = new ArrayList<Creature>(populationSize);
 
-    // intionalizing the population
+    // Initialize population
     for (int i = 0; i < populationSize; i++)
       this.population.add(new Creature(width, height));
 
-    // creating the food
+    // Create food pellets
     for (int i = 0; i < numFood; i++)
       this.food.add(new FoodPellet(width, height));
   }
