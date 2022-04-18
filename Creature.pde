@@ -48,6 +48,7 @@ class Creature {
     // if dist(food) < this.size / 2 (radius)
     // if can see food: move towards
     // else, move randomly
+    // if energy is high enough, create offspring
 
     // Use energy:
     this.energy -= this.calculateEnergyCost();
