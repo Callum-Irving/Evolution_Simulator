@@ -45,11 +45,14 @@ class World {
 
       if (nearest == null) {
         // Wander around randomly.
+        c.wander();
       } else {
         // The distance to the nearest food (food pellet or creature).
         float distance = PVector.dist(nearest.getPosition(), c.getPosition());
+
         if (distance > c.senseDistance) {
           // Wander around randomly.
+          c.wander();
         } else if (distance < c.getRadius() + nearest.getRadius()) {
           // Eat and delete item.
           tree.removeItem(nearest);
@@ -64,7 +67,8 @@ class World {
       c.constrainPos(0, 0, this.width, this.height);
     }
 
-    // Make babies.
+    // TODO: Make babies.
+    // if energy > some value and age > some value, c.makeBaby()
 
     // Keep population at minimum amount.
     while (this.population.size() < this.minPopulation)
