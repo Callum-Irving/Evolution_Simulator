@@ -10,6 +10,8 @@ class Creature {
   float senseDistance;
   float speed;
   float size;
+  // Using HSB color scheme
+  color col;
 
   // When energy hits 0, the creature dies.
   float energy = INITIAL_ENERGY;
@@ -20,13 +22,15 @@ class Creature {
   boolean dead = false;
 
   // Constructor with all parameters passed in.
-  Creature(PVector pos, float senseDistance, float speed, float size, int generation) {
+  Creature(PVector pos, float senseDistance, float speed, float size, int generation, color col) {
     this.pos = pos;
     this.energy = INITIAL_ENERGY;
     this.senseDistance = senseDistance;
     this.speed = speed;
     this.size = size;
     this.generation = generation;
+
+    this.col = col;
   }
 
   // Random constructor.
@@ -53,6 +57,17 @@ class Creature {
     // Use energy:
     this.energy -= this.calculateEnergyCost();
     if (this.energy < 0) this.dead = true;
+  }
+
+  Creature makeBaby(int maxWidth, int maxHeight) {
+    PVector pos = new PVector(random(maxWidth), random(maxHeight));
+    float senseDistance = this.senseDistance + randomGaussian();
+    float speed = this.speed + randomGaussian();
+    float size = this.size + randomGaussian();
+    int generation = this.generation + 1;
+    // TODO: mutate color
+    color col = this.col;
+    return new Creature(pos, senseDistance, speed, size, generation, col);
   }
 
   // Returns the cost per time step.
