@@ -37,7 +37,7 @@ class KDTree<T extends Positioned> {
     current = new KDNode(item);
   }
 
-  public void removeItem(T item) {
+  public void remove(T item) {
     // Search for item using item.pos then remove it
   }
 
@@ -57,10 +57,5 @@ class KDNode<T extends Positioned> {
 
   public PVector getPosition() {
     return this.item.getPosition();
-  }
-
-  public void insert(T item, int cd) {
-    if (item.getPosition().x <= this.item.getPosition().x);
-    //this.left = insert
   }
 }

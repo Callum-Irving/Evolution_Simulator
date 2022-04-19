@@ -3,6 +3,7 @@ float SPEED_EXP = 2.0;
 float SIZE_EXP = 3.0;
 float INITIAL_ENERGY = 100.0;
 float WANDER_STRENGTH = 0.3;
+float BABY_THRESH = 150.0;
 
 // Standard deviation of mutations
 float MUT_SD = 1.0;
@@ -54,18 +55,36 @@ class Creature implements Positioned {
   // - Eat creature
   // - Move towards food/creature
   // - Move randomly
-  void step() {
-    // if dist(food) < this.size / 2 (radius)
-    // if can see food: move towards
-    // else, move randomly
-    // if energy is high enough, create offspring
+  <T extends Positioned> boolean step(T nearestFood, float maxWidth, float maxHeight) {
+    if (this.dead) return false;
+
+    boolean ateFood = false;
+    float distance = PVector.dist(this.pos, nearestFood.getPosition());
+    if (distance < this.size + nearestFood.getRadius()) {
+      // Eat the food.
+      this.energy += nearestFood.getEnergyValue();
+      ateFood = true;
+    } else if (distance < this.senseDistance) {
+      // Move towards the food.
+      this.moveTowards(nearestFood.getPosition());
+    } else {
+      // Move randomly.
+      this.wander();
+    }
+
+    // Keep creature inside the world area.
+    this.constrainPos(0.0, 0.0, maxWidth, maxHeight);
+
+    // TODO: Make baby if energy and age are high enough
+    if (this.energy > BABY_THRESH) this.makeBaby(maxWidth, maxHeight);
 
     // Use energy:
     this.energy -= this.calculateEnergyCost();
     if (this.energy < 0) this.dead = true;
+    return ateFood;
   }
 
-  Creature makeBaby(int maxWidth, int maxHeight) {
+  Creature makeBaby(float maxWidth, float maxHeight) {
     PVector pos = new PVector(random(maxWidth), random(maxHeight));
     PVector dir = PVector.fromAngle(random(TWO_PI));
     float senseDistance = this.senseDistance + randomGaussian() * MUT_SD;

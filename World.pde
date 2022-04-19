@@ -41,30 +41,11 @@ class World {
         nearest = tree.nthNearest(2, c);
       }
 
-      // TODO: Optimize the following mess:
-
-      if (nearest == null) {
-        // Wander around randomly.
-        c.wander();
-      } else {
-        // The distance to the nearest food (food pellet or creature).
-        float distance = PVector.dist(nearest.getPosition(), c.getPosition());
-
-        if (distance > c.senseDistance) {
-          // Wander around randomly.
-          c.wander();
-        } else if (distance < c.getRadius() + nearest.getRadius()) {
-          // Eat and delete item.
-          tree.removeItem(nearest);
-          this.eat(c, nearest);
-        } else {
-          // Move towards the food.
-          c.moveTowards(nearest.getPosition());
-        }
+      boolean ateFood = c.step(nearest, this.width, this.height);
+      if (ateFood) {
+        tree.remove(nearest);
+        this.eat(nearest);
       }
-
-      // Keep creature within the world area.
-      c.constrainPos(0, 0, this.width, this.height);
     }
 
     // TODO: Make babies.
@@ -79,8 +60,7 @@ class World {
       this.food.add(new FoodPellet(this.width, this.height));
   }
 
-  <T extends Positioned> void eat(Creature eater, T food) {
-    eater.energy += food.getEnergyValue();
+  <T extends Positioned> void eat(T food) {
     if (food instanceof FoodPellet) this.food.remove(food);
     else this.population.remove(food);
   }
