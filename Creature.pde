@@ -6,7 +6,7 @@ float INITIAL_ENERGY = 100.0;
 // Standard deviation of mutations
 float MUT_SD = 1.0;
 
-class Creature {
+class Creature implements Positioned {
   PVector pos;
 
   // Parameters that can be mutated:
@@ -75,5 +75,26 @@ class Creature {
   // Returns the cost per time step.
   float calculateEnergyCost() {
     return SENSE_EXP * SPEED_EXP * this.speed + SIZE_EXP * this.size;
+  }
+
+  public void moveTowards(PVector pt) {
+  }
+
+  public void wander() {
+  }
+
+  public void constrainPos(float minX, float minY, float maxX, float maxY) {
+  }
+
+  public PVector getPosition() {
+    return this.pos;
+  }
+
+  public float getRadius() {
+    return this.size;
+  }
+
+  public float getEnergyValue() {
+    return this.energy;
   }
 }
