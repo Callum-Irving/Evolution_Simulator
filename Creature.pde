@@ -3,6 +3,9 @@ float SPEED_EXP = 2.0;
 float SIZE_EXP = 3.0;
 float INITIAL_ENERGY = 100.0;
 
+// Standard deviation of mutations
+float MUT_SD = 1.0;
+
 class Creature {
   PVector pos;
 
@@ -29,7 +32,6 @@ class Creature {
     this.speed = speed;
     this.size = size;
     this.generation = generation;
-
     this.col = col;
   }
 
@@ -61,9 +63,9 @@ class Creature {
 
   Creature makeBaby(int maxWidth, int maxHeight) {
     PVector pos = new PVector(random(maxWidth), random(maxHeight));
-    float senseDistance = this.senseDistance + randomGaussian();
-    float speed = this.speed + randomGaussian();
-    float size = this.size + randomGaussian();
+    float senseDistance = this.senseDistance + randomGaussian() * MUT_SD;
+    float speed = this.speed + randomGaussian() * MUT_SD;
+    float size = this.size + randomGaussian() * MUT_SD;
     int generation = this.generation + 1;
     // TODO: mutate color
     color col = this.col;

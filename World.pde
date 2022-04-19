@@ -29,6 +29,7 @@ class World {
 
   void step() {
     // Update each creature
+    // - use KD tree for nearest food and creature
     // Create new creature babies
     // If creatures died, create new ones
     // Replenish food supply
