@@ -6,3 +6,5 @@ By Aiden Wilson, Dennis Mironov, and Callum Irving.
 - [ ] Use KD tree for spacial optimization
 - [ ] Add mutable annotation
 - [ ] Add metrics for average properties
+- [ ] Add terrain that creatures can adapt to
+- [ ] Add NEAT algorithm for brains
