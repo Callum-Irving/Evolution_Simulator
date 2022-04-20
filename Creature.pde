@@ -63,19 +63,25 @@ class Creature implements Positioned {
 
     boolean ateFood = false;
     float distance = PVector.dist(this.pos, nearestFood.getPosition());
-    if (!this.canEat(nearestFood)) {
-      // If it can eat us, run away.
-      this.runAwayFrom(nearestFood.getPosition());
-    } else if (nearestFood.eaten() || distance > this.senseDistance) {
-      // If it's been eaten or we can't see it, move randomly.
+    if (distance > this.senseDistance || nearestFood.eaten()) {
+      // If we can't see it or it's been eaten already, wander.
       this.wander();
-    } else if (distance < this.size + nearestFood.getRadius()) {
-      // Eat the food.
-      this.energy += nearestFood.getEnergyValue();
-      ateFood = true;
+    } else if (!this.canEat(nearestFood)) {
+      if (nearestFood instanceof Creature && this.canEatUs((Creature)nearestFood)) {
+        // If it can eat us, run away.
+        this.runAwayFrom(nearestFood.getPosition());
+      } else {
+        this.wander();
+      }
     } else {
-      // Move towards the food.
-      this.moveTowards(nearestFood.getPosition());
+      if (distance < this.size + nearestFood.getRadius()) {
+        // Eat the food.
+        this.energy += nearestFood.getEnergyValue();
+        ateFood = true;
+      } else {
+        // Move towards the food.
+        this.moveTowards(nearestFood.getPosition());
+      }
     }
 
     // Keep creature inside the world area.
@@ -139,8 +145,12 @@ class Creature implements Positioned {
     this.pos.y = constrain(this.pos.y, minY, maxY);
   }
 
+  private boolean canEatUs(Creature other) {
+    return other.getRadius() > this.size * 1.2;
+  }
+
   private boolean canEat(Positioned other) {
-    if (other instanceof Creature && other.getRadius() > this.getRadius() * 1.2) return false;
+    if (other instanceof Creature && other.getRadius() * 1.2 >= this.size) return false;
     return true;
   }
 

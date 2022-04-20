@@ -42,13 +42,14 @@ class World {
       if (ateFood) nearest.getEaten();
       c.show();
     }
-    
+
     for (FoodPellet food : this.food)
       food.show();
 
     // Remove dead creatures.
     for (int i = this.population.size() - 1; i >= 0; i--)
-      if (this.population.get(i).eaten()) this.population.remove(i);
+      if (this.population.get(i).eaten())
+        this.population.remove(i);
 
     // Remove eaten food.
     for (int i = this.food.size() - 1; i >= 0; i--)
@@ -66,13 +67,14 @@ class World {
   Positioned badNN(Creature c) {
     Positioned best = null;
     float bestDist = Float.MAX_VALUE;
+
     for (Creature other : this.population) {
-      if (c == other) continue;
+      if (other == c) continue;
       PVector diff = PVector.sub(other.getPosition(), c.getPosition());
       float dist = diff.dot(diff);
       if (dist < bestDist) {
         bestDist = dist;
-        best = c;
+        best = other;
       }
     }
 
