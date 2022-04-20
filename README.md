@@ -1,4 +1,4 @@
-# Programming Realistic Choosing
+# Evolution Simulator
 
 By Aiden Wilson, Dennis Mironov, and Callum Irving.
 
