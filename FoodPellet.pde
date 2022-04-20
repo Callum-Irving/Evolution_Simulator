@@ -9,7 +9,7 @@ class FoodPellet implements Positioned {
   }
   FoodPellet (int maxWidth, int maxHeight) {
     this.pos = new PVector (random(maxWidth), random(maxHeight));
-    this.foodValue = 10;
+    this.foodValue = random(4, 10);
   }
 
   public void show() {

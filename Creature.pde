@@ -63,6 +63,7 @@ class Creature implements Positioned {
 
     boolean ateFood = false;
     float distance = PVector.dist(this.pos, nearestFood.getPosition());
+
     if (distance > this.senseDistance || nearestFood.eaten()) {
       // If we can't see it or it's been eaten already, wander.
       this.wander();
@@ -71,27 +72,26 @@ class Creature implements Positioned {
         // If it can eat us, run away.
         this.runAwayFrom(nearestFood.getPosition());
       } else {
+        // If we can't eat it but it can't eat us, wander.
         this.wander();
       }
+    } else if (distance < this.size + nearestFood.getRadius()) {
+      // Eat the food.
+      this.energy += nearestFood.getEnergyValue();
+      ateFood = true;
     } else {
-      if (distance < this.size + nearestFood.getRadius()) {
-        // Eat the food.
-        this.energy += nearestFood.getEnergyValue();
-        ateFood = true;
-      } else {
-        // Move towards the food.
-        this.moveTowards(nearestFood.getPosition());
-      }
+      // Move towards the food.
+      this.moveTowards(nearestFood.getPosition());
     }
 
     // Keep creature inside the world area.
     this.constrainPos(0.0, 0.0, maxWidth, maxHeight);
 
-    // TODO: Make baby if energy and age are high enough
+    // Make baby if energy and age are high enough
     if (this.energy > BABY_THRESH) this.makeBaby(maxWidth, maxHeight);
 
     // Use energy:
-    // UNCOMMENT this.energy -= this.calculateEnergyCost();
+    this.energy -= this.calculateEnergyCost();
     if (this.energy < 0) this.dead = true;
     return ateFood;
   }
@@ -115,7 +115,7 @@ class Creature implements Positioned {
 
   // Returns the cost per time step.
   float calculateEnergyCost() {
-    return SENSE_EXP * SPEED_EXP * this.speed + SIZE_EXP * this.size;
+    return 0.01 * (SENSE_EXP * SPEED_EXP * this.speed + SIZE_EXP * this.size);
   }
 
   private void moveTowards(PVector pt) {
