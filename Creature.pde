@@ -44,9 +44,12 @@ class Creature implements Positioned {
   Creature(int maxWidth, int maxHeight) {
     this.pos = new PVector(random(maxWidth), random(maxHeight));
     this.dir = PVector.fromAngle(random(TWO_PI));
-    this.senseDistance = random(5, 15);
-    this.speed = random(5, 15);
+    // UNCOMMENT this.senseDistance = random(5, 15);
+    this.senseDistance = 50;
+    // UNCOMMENT this.speed = random(5, 15);
+    this.speed = 2;
     this.size = random(5, 15);
+    this.col = color(random(255), random(255), random(255));
     this.generation = 0;
   }
 
@@ -60,16 +63,19 @@ class Creature implements Positioned {
 
     boolean ateFood = false;
     float distance = PVector.dist(this.pos, nearestFood.getPosition());
-    if (distance < this.size + nearestFood.getRadius()) {
+    if (!this.canEat(nearestFood)) {
+      // If it can eat us, run away.
+      this.runAwayFrom(nearestFood.getPosition());
+    } else if (nearestFood.eaten() || distance > this.senseDistance) {
+      // If it's been eaten or we can't see it, move randomly.
+      this.wander();
+    } else if (distance < this.size + nearestFood.getRadius()) {
       // Eat the food.
       this.energy += nearestFood.getEnergyValue();
       ateFood = true;
-    } else if (distance < this.senseDistance) {
+    } else {
       // Move towards the food.
       this.moveTowards(nearestFood.getPosition());
-    } else {
-      // Move randomly.
-      this.wander();
     }
 
     // Keep creature inside the world area.
@@ -79,9 +85,14 @@ class Creature implements Positioned {
     if (this.energy > BABY_THRESH) this.makeBaby(maxWidth, maxHeight);
 
     // Use energy:
-    this.energy -= this.calculateEnergyCost();
+    // UNCOMMENT this.energy -= this.calculateEnergyCost();
     if (this.energy < 0) this.dead = true;
     return ateFood;
+  }
+
+  void show() {
+    fill(this.col);
+    circle(this.pos.x, this.pos.y, this.size * 2);
   }
 
   Creature makeBaby(float maxWidth, float maxHeight) {
@@ -101,21 +112,36 @@ class Creature implements Positioned {
     return SENSE_EXP * SPEED_EXP * this.speed + SIZE_EXP * this.size;
   }
 
-  public void moveTowards(PVector pt) {
-    float newAngle = PVector.sub(pt, this.pos).heading();
-    this.dir = PVector.fromAngle(newAngle);
+  private void moveTowards(PVector pt) {
+    this.pointTo(pt);
     this.pos.add(PVector.mult(this.dir, this.speed));
   }
 
-  public void wander() {
+  private void runAwayFrom(PVector pt) {
+    this.pointTo(pt);
+    this.dir.rotate(PI);
+    this.pos.add(PVector.mult(this.dir, this.speed));
+  }
+
+  private void pointTo(PVector pt) {
+    float newDir = PVector.sub(pt, this.pos).heading();
+    this.dir = PVector.fromAngle(newDir);
+  }
+
+  private void wander() {
     // TODO: Try out randomGaussian to see if it looks more natural.
     this.dir.rotate(random(-WANDER_STRENGTH, WANDER_STRENGTH));
     this.pos.add(PVector.mult(this.dir, this.speed));
   }
 
-  public void constrainPos(float minX, float minY, float maxX, float maxY) {
+  private void constrainPos(float minX, float minY, float maxX, float maxY) {
     this.pos.x = constrain(this.pos.x, minX, maxX);
     this.pos.y = constrain(this.pos.y, minY, maxY);
+  }
+
+  private boolean canEat(Positioned other) {
+    if (other instanceof Creature && other.getRadius() > this.getRadius() * 1.2) return false;
+    return true;
   }
 
   public PVector getPosition() {
@@ -128,5 +154,13 @@ class Creature implements Positioned {
 
   public float getEnergyValue() {
     return this.energy;
+  }
+
+  public boolean eaten() {
+    return this.dead;
+  }
+
+  public void getEaten() {
+    this.dead = true;
   }
 }

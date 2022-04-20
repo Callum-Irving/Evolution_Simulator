@@ -29,41 +29,62 @@ class World {
 
   void step() {
     // Create K-D tree to make nearest-neighbour checks quicker.
-    KDTree tree = new KDTree();
-    tree.insertList(this.population);
-    tree.insertList(this.food);
+    //KDTree tree = new KDTree();
+    //tree.insertList(this.population);
+    //tree.insertList(this.food);
 
     // Update each creature
     for (Creature c : this.population) {
-      // Find the closest node that the creature can eat:
-      Positioned nearest = tree.nthNearest(1, c);
-      while (nearest instanceof Creature && ((Creature)nearest).size >= c.size) {
-        nearest = tree.nthNearest(2, c);
-      }
-
+      //Positioned nearest = tree.nearestNeighbour(c);
+      //Positioned nearest = tree.findNearest(c);
+      Positioned nearest = this.badNN(c);
       boolean ateFood = c.step(nearest, this.width, this.height);
-      if (ateFood) {
-        tree.remove(nearest);
-        this.eat(nearest);
-      }
+      if (ateFood) nearest.getEaten();
+      c.show();
     }
+    
+    for (FoodPellet food : this.food)
+      food.show();
 
-    // TODO: Make babies.
-    // if energy > some value and age > some value, c.makeBaby()
+    // Remove dead creatures.
+    for (int i = this.population.size() - 1; i >= 0; i--)
+      if (this.population.get(i).eaten()) this.population.remove(i);
+
+    // Remove eaten food.
+    for (int i = this.food.size() - 1; i >= 0; i--)
+      if (this.food.get(i).eaten()) this.food.remove(i);
 
     // Keep population at minimum amount.
-    while (this.population.size() < this.minPopulation) {
+    while (this.population.size() < this.minPopulation)
       this.population.add(new Creature(this.width, this.height));
-    }
 
     // Keep food at minimum amount.
-    while (this.food.size() < this.numFood) {
+    while (this.food.size() < this.numFood)
       this.food.add(new FoodPellet(this.width, this.height));
-    }
   }
 
-  void eat(Positioned food) {
-    if (food instanceof FoodPellet) this.food.remove(food);
-    else this.population.remove(food);
+  Positioned badNN(Creature c) {
+    Positioned best = null;
+    float bestDist = Float.MAX_VALUE;
+    for (Creature other : this.population) {
+      if (c == other) continue;
+      PVector diff = PVector.sub(other.getPosition(), c.getPosition());
+      float dist = diff.dot(diff);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = c;
+      }
+    }
+
+    for (FoodPellet food : this.food) {
+      PVector diff = PVector.sub(food.getPosition(), c.getPosition());
+      float dist = diff.dot(diff);
+      if (dist <= bestDist) {
+        bestDist = dist;
+        best = food;
+      }
+    }
+
+    return best;
   }
 }
