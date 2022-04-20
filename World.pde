@@ -52,15 +52,17 @@ class World {
     // if energy > some value and age > some value, c.makeBaby()
 
     // Keep population at minimum amount.
-    while (this.population.size() < this.minPopulation)
+    while (this.population.size() < this.minPopulation) {
       this.population.add(new Creature(this.width, this.height));
+    }
 
     // Keep food at minimum amount.
-    while (this.food.size() < this.numFood)
+    while (this.food.size() < this.numFood) {
       this.food.add(new FoodPellet(this.width, this.height));
+    }
   }
 
-  <T extends Positioned> void eat(T food) {
+  void eat(Positioned food) {
     if (food instanceof FoodPellet) this.food.remove(food);
     else this.population.remove(food);
   }
