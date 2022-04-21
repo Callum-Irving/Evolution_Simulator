@@ -56,7 +56,7 @@ class Creature implements Positioned {
   // - Eat creature
   // - Move towards food/creature
   // - Move randomly
-  boolean step(Positioned nearestFood, float maxWidth, float maxHeight) {
+  boolean update(Positioned nearestFood, float maxWidth, float maxHeight) {
     if (this.dead) return false;
 
     boolean ateFood = false;
