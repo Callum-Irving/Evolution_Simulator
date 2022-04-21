@@ -43,7 +43,6 @@ class Metrics {
     this.speed /= (float)this.numCreatures;
     this.size /= (float)this.numCreatures;
     this.age /= (float)this.numCreatures;
-    println("this size", this.size);
   }
 
   void log() {

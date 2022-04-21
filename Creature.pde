@@ -1,6 +1,6 @@
 float SENSE_EXP = 1.0;
-float SPEED_EXP = 2.0;
-float SIZE_EXP = 3.0;
+float SPEED_EXP = 0.2;
+float SIZE_EXP = 0.3;
 float INITIAL_ENERGY = 100.0;
 float WANDER_STRENGTH = 0.5;
 float BABY_THRESH = 150.0;
@@ -114,7 +114,7 @@ class Creature implements Positioned {
 
   // Returns the cost per time step.
   float calculateEnergyCost() {
-    return 0.01 * (SENSE_EXP * SPEED_EXP * this.speed + SIZE_EXP * this.size);
+    return 0.01 * pow(this.senseDistance, SENSE_EXP) * pow(this.speed, SPEED_EXP) * pow(this.size, SIZE_EXP);
   }
 
   private void moveTowards(PVector pt) {
