@@ -1,12 +1,15 @@
 World w;
+Metrics m;
 
 void setup() {
-  size(400, 400);
+  size(1000, 1000);
+
   frameRate(15);
-  w = new World(width, height, 10, 15);
+  w = new World(width, height, 10, 40);
+  m = new Metrics();
 }
 
 void draw() {
   background(0);
-  w.step();
+  w.step(m);
 }

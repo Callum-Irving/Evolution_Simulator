@@ -27,7 +27,8 @@ class World {
       this.food.add(new FoodPellet(width, height));
   }
 
-  void step() {
+  void step(Metrics metrics) {
+    metrics.reset();
     // Create K-D tree to make nearest-neighbour checks quicker.
     //KDTree tree = new KDTree();
     //tree.insertList(this.population);
@@ -41,7 +42,11 @@ class World {
       boolean ateFood = c.step(nearest, this.width, this.height);
       if (ateFood) nearest.getEaten();
       c.show();
+
+      metrics.addToTotal(c);
     }
+
+    metrics.calculateTotals();
 
     for (FoodPellet food : this.food)
       food.show();

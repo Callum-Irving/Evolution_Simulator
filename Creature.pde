@@ -2,7 +2,7 @@ float SENSE_EXP = 1.0;
 float SPEED_EXP = 2.0;
 float SIZE_EXP = 3.0;
 float INITIAL_ENERGY = 100.0;
-float WANDER_STRENGTH = 0.3;
+float WANDER_STRENGTH = 0.5;
 float BABY_THRESH = 150.0;
 
 // Standard deviation of mutations
@@ -44,10 +44,8 @@ class Creature implements Positioned {
   Creature(int maxWidth, int maxHeight) {
     this.pos = new PVector(random(maxWidth), random(maxHeight));
     this.dir = PVector.fromAngle(random(TWO_PI));
-    // UNCOMMENT this.senseDistance = random(5, 15);
-    this.senseDistance = 50;
-    // UNCOMMENT this.speed = random(5, 15);
-    this.speed = 2;
+    this.senseDistance = random(25, 50);
+    this.speed = random(5, 15);
     this.size = random(5, 15);
     this.col = color(random(255), random(255), random(255));
     this.generation = 0;
@@ -93,6 +91,7 @@ class Creature implements Positioned {
     // Use energy:
     this.energy -= this.calculateEnergyCost();
     if (this.energy < 0) this.dead = true;
+    this.age++;
     return ateFood;
   }
 
