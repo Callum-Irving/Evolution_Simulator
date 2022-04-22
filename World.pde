@@ -1,3 +1,5 @@
+boolean PREDATION = true;
+
 class World {
   int width, height;
   ArrayList<FoodPellet> food;
@@ -27,21 +29,28 @@ class World {
       this.food.add(new FoodPellet(width, height));
   }
 
-  void step() {
+  void update(Metrics metrics) {
+    metrics.reset();
     // Create K-D tree to make nearest-neighbour checks quicker.
     //KDTree tree = new KDTree();
     //tree.insertList(this.population);
     //tree.insertList(this.food);
+
+    ArrayList<Creature> babies = new ArrayList<Creature>();
 
     // Update each creature
     for (Creature c : this.population) {
       //Positioned nearest = tree.nearestNeighbour(c);
       //Positioned nearest = tree.findNearest(c);
       Positioned nearest = this.badNN(c);
-      boolean ateFood = c.step(nearest, this.width, this.height);
+      boolean ateFood = c.update(babies, nearest, this.width, this.height);
       if (ateFood) nearest.getEaten();
       c.show();
+
+      metrics.addToTotal(c);
     }
+
+    metrics.calculateTotals();
 
     for (FoodPellet food : this.food)
       food.show();
@@ -50,6 +59,8 @@ class World {
     for (int i = this.population.size() - 1; i >= 0; i--)
       if (this.population.get(i).eaten())
         this.population.remove(i);
+    
+    this.population.addAll(babies);
 
     // Remove eaten food.
     for (int i = this.food.size() - 1; i >= 0; i--)
@@ -68,13 +79,15 @@ class World {
     Positioned best = null;
     float bestDist = Float.MAX_VALUE;
 
-    for (Creature other : this.population) {
-      if (other == c) continue;
-      PVector diff = PVector.sub(other.getPosition(), c.getPosition());
-      float dist = diff.dot(diff);
-      if (dist < bestDist) {
-        bestDist = dist;
-        best = other;
+    if (PREDATION) {
+      for (Creature other : this.population) {
+        if (other == c) continue;
+        PVector diff = PVector.sub(other.getPosition(), c.getPosition());
+        float dist = diff.dot(diff);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = other;
+        }
       }
     }
 
