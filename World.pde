@@ -1,3 +1,5 @@
+boolean PREDATION = true;
+
 class World {
   int width, height;
   ArrayList<FoodPellet> food;
@@ -73,13 +75,15 @@ class World {
     Positioned best = null;
     float bestDist = Float.MAX_VALUE;
 
-    for (Creature other : this.population) {
-      if (other == c) continue;
-      PVector diff = PVector.sub(other.getPosition(), c.getPosition());
-      float dist = diff.dot(diff);
-      if (dist < bestDist) {
-        bestDist = dist;
-        best = other;
+    if (PREDATION) {
+      for (Creature other : this.population) {
+        if (other == c) continue;
+        PVector diff = PVector.sub(other.getPosition(), c.getPosition());
+        float dist = diff.dot(diff);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = other;
+        }
       }
     }
 
