@@ -140,8 +140,21 @@ class Creature implements Positioned {
   }
 
   private void constrainPos(float minX, float minY, float maxX, float maxY) {
-    this.pos.x = constrain(this.pos.x, minX, maxX);
-    this.pos.y = constrain(this.pos.y, minY, maxY);
+    if (this.pos.x < minX) {
+      this.pos.x = minX;
+      this.dir = PVector.fromAngle(0);
+    } else if (this.pos.x > maxX) {
+      this.pos.x = maxX;
+      this.dir = PVector.fromAngle(PI);
+    }
+
+    if (this.pos.y < minY) {
+      this.pos.y = minY;
+      this.dir = PVector.fromAngle(HALF_PI);
+    } else if (this.pos.y > maxY) {
+      this.pos.y = maxY;
+      this.dir = PVector.fromAngle(-HALF_PI);
+    }
   }
 
   private boolean canEatUs(Creature other) {
