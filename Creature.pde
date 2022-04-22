@@ -1,9 +1,9 @@
-float SENSE_EXP = 1.0;
+float SENSE_EXP = 0.1;
 float SPEED_EXP = 0.2;
-float SIZE_EXP = 0.3;
+float SIZE_EXP = 0.7;
 float INITIAL_ENERGY = 100.0;
 float WANDER_STRENGTH = 0.5;
-float BABY_THRESH = 150.0;
+float BABY_THRESH = 140.0;
 
 // Standard deviation of mutations
 float MUT_SD = 1.0;
@@ -56,7 +56,7 @@ class Creature implements Positioned {
   // - Eat creature
   // - Move towards food/creature
   // - Move randomly
-  boolean update(Positioned nearestFood, float maxWidth, float maxHeight) {
+  boolean update(ArrayList<Creature> population, Positioned nearestFood, float maxWidth, float maxHeight) {
     if (this.dead) return false;
 
     boolean ateFood = false;
@@ -86,7 +86,7 @@ class Creature implements Positioned {
     this.constrainPos(0.0, 0.0, maxWidth, maxHeight);
 
     // Make baby if energy and age are high enough
-    if (this.energy > BABY_THRESH) this.makeBaby(maxWidth, maxHeight);
+    if (this.energy > BABY_THRESH) population.add(this.makeBaby(maxWidth, maxHeight));
 
     // Use energy:
     this.energy -= this.calculateEnergyCost();
@@ -109,12 +109,16 @@ class Creature implements Positioned {
     int generation = this.generation + 1;
     // TODO: mutate color
     color col = this.col;
+
+    // TODO: Make this value a variable somehow.
+    this.energy -= 70;
+
     return new Creature(pos, dir, senseDistance, speed, size, generation, col);
   }
 
   // Returns the cost per time step.
   float calculateEnergyCost() {
-    return 0.01 * pow(this.senseDistance, SENSE_EXP) * pow(this.speed, SPEED_EXP) * pow(this.size, SIZE_EXP);
+    return 0.005 * pow(this.senseDistance, SENSE_EXP) * pow(this.speed, SPEED_EXP) * pow(this.size, SIZE_EXP);
   }
 
   private void moveTowards(PVector pt) {

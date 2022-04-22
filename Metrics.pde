@@ -3,6 +3,7 @@ class Metrics {
   float speed = 0;
   float size = 0;
   float age = 0;
+  float energy = 0;
   int maxGen = 0;
 
   int numCreatures = 0;
@@ -19,6 +20,10 @@ class Metrics {
     return this.age;
   }
 
+  public float avEnergy() {
+    return this.energy;
+  }
+
   void reset() {
     this.senseDistance = 0;
     this.speed = 0;
@@ -26,6 +31,7 @@ class Metrics {
     this.age = 0;
     this.maxGen = 0;
     this.numCreatures = 0;
+    this.energy = 0;
   }
 
   void addToTotal(Creature c) {
@@ -36,6 +42,7 @@ class Metrics {
     if (c.generation > this.maxGen)
       this.maxGen = c.generation;
     this.numCreatures++;
+    this.energy += c.energy;
   }
 
   void calculateTotals() {
@@ -43,6 +50,7 @@ class Metrics {
     this.speed /= (float)this.numCreatures;
     this.size /= (float)this.numCreatures;
     this.age /= (float)this.numCreatures;
+    this.energy /= (float)this.numCreatures;
   }
 
   void log() {

@@ -36,12 +36,14 @@ class World {
     //tree.insertList(this.population);
     //tree.insertList(this.food);
 
+    ArrayList<Creature> babies = new ArrayList<Creature>();
+
     // Update each creature
     for (Creature c : this.population) {
       //Positioned nearest = tree.nearestNeighbour(c);
       //Positioned nearest = tree.findNearest(c);
       Positioned nearest = this.badNN(c);
-      boolean ateFood = c.update(nearest, this.width, this.height);
+      boolean ateFood = c.update(babies, nearest, this.width, this.height);
       if (ateFood) nearest.getEaten();
       c.show();
 
@@ -57,6 +59,8 @@ class World {
     for (int i = this.population.size() - 1; i >= 0; i--)
       if (this.population.get(i).eaten())
         this.population.remove(i);
+    
+    this.population.addAll(babies);
 
     // Remove eaten food.
     for (int i = this.food.size() - 1; i >= 0; i--)
