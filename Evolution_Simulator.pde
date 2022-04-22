@@ -1,9 +1,11 @@
 World w;
+import g4p_controls.*;
 
 void setup() {
-  size(400, 400);
-  frameRate(15);
+  size(1280, 700);
+  //frameRate(60);
   w = new World(width, height, 10, 15);
+  createGUI();
 }
 
 void draw() {
