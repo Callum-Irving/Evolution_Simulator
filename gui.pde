@@ -60,6 +60,16 @@ public void pauseButtonClicked(GButton source, GEvent event) { //_CODE_:pauseBut
   }
 } //_CODE_:pauseButton:885390:
 
+public void predationCheckClicked(GCheckbox source, GEvent event) { //_CODE_:predationCheck:597874:
+  if (PREDATION) {
+    PREDATION = false;
+    println("Predation is now set to", PREDATION);
+  } else {
+    PREDATION = true;
+    println("Predation is now set to", PREDATION);
+  }
+} //_CODE_:predationCheck:597874:
+
 
 
 // Create all the GUI controls. 
@@ -147,10 +157,16 @@ public void createGUI(){
   mutationRateSlider.setNumberFormat(G4P.DECIMAL, 2);
   mutationRateSlider.setOpaque(false);
   mutationRateSlider.addEventHandler(this, "mutationRateSliderChanged");
-  pauseButton = new GButton(window1, 224, 248, 80, 30);
+  pauseButton = new GButton(window1, 226, 302, 80, 30);
   pauseButton.setText("Pause");
   pauseButton.setLocalColorScheme(GCScheme.RED_SCHEME);
   pauseButton.addEventHandler(this, "pauseButtonClicked");
+  predationCheck = new GCheckbox(window1, 205, 251, 120, 20);
+  predationCheck.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
+  predationCheck.setText("Predation");
+  predationCheck.setOpaque(false);
+  predationCheck.addEventHandler(this, "predationCheckClicked");
+  predationCheck.setSelected(true);
   window1.loop();
 }
 
@@ -173,3 +189,4 @@ GCustomSlider babyThresholdSlider;
 GLabel label8; 
 GCustomSlider mutationRateSlider; 
 GButton pauseButton; 
+GCheckbox predationCheck; 
