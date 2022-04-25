@@ -96,8 +96,32 @@ class Creature implements Positioned {
   }
 
   void show() {
+    noStroke();
     fill(this.col);
-    circle(this.pos.x, this.pos.y, this.size * 2);
+
+    // Head of creature.
+    float heading = this.dir.heading();
+    arc(this.pos.x, this.pos.y, this.size * 2, this.size * 2, heading - HALF_PI, heading + HALF_PI, PIE);
+
+    // Left side of the circle.
+    PVector p1 = this.dir.copy();
+    p1.rotate(-HALF_PI);
+    p1.mult(this.size);
+    p1.add(this.pos);
+
+    // Right side of the circle.
+    PVector p2 = this.dir.copy();
+    p2.rotate(HALF_PI);
+    p2.mult(this.size);
+    p2.add(this.pos);
+
+    // End of the tail.
+    PVector p3 = this.dir.copy();
+    p3.rotate(PI);
+    p3.mult(this.speed * this.size / 3);
+    p3.add(this.pos);
+
+    triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
   }
 
   Creature makeBaby(float maxWidth, float maxHeight) {
