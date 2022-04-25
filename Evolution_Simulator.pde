@@ -2,6 +2,7 @@ import g4p_controls.*;
 
 Metrics m;
 World w;
+boolean loop = true;
 
 void setup() {
   size(1280, 720);

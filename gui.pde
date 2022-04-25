@@ -46,6 +46,20 @@ public void mutationRateSliderChanged(GCustomSlider source, GEvent event) { //_C
   MUT_SD = mutationRateSlider.getValueF();
 } //_CODE_:mutationRateSlider:389455:
 
+public void pauseButtonClicked(GButton source, GEvent event) { //_CODE_:pauseButton:885390:
+  if (loop) {
+    noLoop();
+    loop = false;
+    pauseButton.setText("Resume");
+    pauseButton.setLocalColorScheme(6);
+  } else {
+    loop();
+    loop = true;
+    pauseButton.setText("Pause");
+    pauseButton.setLocalColorScheme(0);
+  }
+} //_CODE_:pauseButton:885390:
+
 
 
 // Create all the GUI controls. 
@@ -133,6 +147,10 @@ public void createGUI(){
   mutationRateSlider.setNumberFormat(G4P.DECIMAL, 2);
   mutationRateSlider.setOpaque(false);
   mutationRateSlider.addEventHandler(this, "mutationRateSliderChanged");
+  pauseButton = new GButton(window1, 224, 248, 80, 30);
+  pauseButton.setText("Pause");
+  pauseButton.setLocalColorScheme(GCScheme.RED_SCHEME);
+  pauseButton.addEventHandler(this, "pauseButtonClicked");
   window1.loop();
 }
 
@@ -154,3 +172,4 @@ GLabel label7;
 GCustomSlider babyThresholdSlider; 
 GLabel label8; 
 GCustomSlider mutationRateSlider; 
+GButton pauseButton; 
