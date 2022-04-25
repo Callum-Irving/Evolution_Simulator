@@ -131,8 +131,11 @@ class Creature implements Positioned {
     float speed = this.speed + randomGaussian() * MUT_SD;
     float size = this.size + randomGaussian() * MUT_SD;
     int generation = this.generation + 1;
-    // TODO: mutate color
-    color col = this.col;
+    int rOff = int(random(-5, 5)) << 16;
+    int gOff = int(random(-5, 5)) << 8;
+    int bOff = int(random(-5, 5));
+    int tOff = rOff | gOff | bOff;
+    color col = this.col + tOff;
 
     // TODO: Make this value a variable somehow.
     this.energy -= 70;
