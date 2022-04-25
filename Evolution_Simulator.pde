@@ -4,7 +4,7 @@ Metrics m;
 World w;
 
 void setup() {
-  size(1280, 700);
+  size(1280, 720);
   //frameRate(15);
   w = new World(width, height, 10, 10);
   m = new Metrics();
