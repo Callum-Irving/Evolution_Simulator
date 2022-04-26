@@ -1,9 +1,9 @@
-float SENSE_EXP = 0.1;
-float SPEED_EXP = 0.2;
-float SIZE_EXP = 0.7;
-float INITIAL_ENERGY = 100.0;
-float WANDER_STRENGTH = 0.5;
-float BABY_THRESH = 140.0;
+float SENSE_EXP;
+float SPEED_EXP;
+float SIZE_EXP;
+float INITIAL_ENERGY;
+float WANDER_STRENGTH;
+float BABY_THRESH;
 
 // Standard deviation of mutations
 float MUT_SD = 1.0;
