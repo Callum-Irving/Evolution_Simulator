@@ -17,7 +17,7 @@ class Creature implements Positioned {
   float speed;
   float size;
   // Using HSB color scheme
-  color col;
+  MutableColor col;
 
   // When energy hits 0, the creature dies.
   float energy = INITIAL_ENERGY;
@@ -28,7 +28,7 @@ class Creature implements Positioned {
   boolean dead = false;
 
   // Constructor with all parameters passed in.
-  Creature(PVector pos, PVector dir, float senseDistance, float speed, float size, int generation, color col) {
+  Creature(PVector pos, PVector dir, float senseDistance, float speed, float size, int generation, MutableColor col) {
     this.pos = pos;
     this.dir = dir;
     this.energy = INITIAL_ENERGY;
@@ -47,7 +47,7 @@ class Creature implements Positioned {
     this.senseDistance = random(25, 50);
     this.speed = random(5, 15);
     this.size = random(5, 15);
-    this.col = color(random(255), random(255), random(255));
+    this.col = new MutableColor((int)random(255), (int)random(255), (int)random(255));
     this.generation = 0;
   }
 
@@ -103,7 +103,7 @@ class Creature implements Positioned {
       fill (0,255,255,50);
       circle(this.pos.x, this.pos.y, this.senseDistance * 2);
     }
-    fill(this.col);
+    fill(this.col.getColor());
 
     // Head of creature.
     float heading = this.dir.heading();
@@ -138,11 +138,7 @@ class Creature implements Positioned {
     float speed = this.speed + randomGaussian() * MUT_SD;
     float size = this.size + randomGaussian() * MUT_SD;
     int generation = this.generation + 1;
-    int rOff = int(random(5)) << 16;
-    int gOff = int(random(5)) << 8;
-    int bOff = int(random(5));
-    int tOff = rOff | gOff | bOff;
-    color col = this.col + tOff;
+    MutableColor col = new MutableColor(this.col);
 
     // TODO: Make this value a variable somehow.
     this.energy -= 70;
