@@ -4,7 +4,7 @@ float SIZE_EXP = 0.7;
 float INITIAL_ENERGY = 100.0;
 float WANDER_STRENGTH = 0.5;
 float BABY_THRESH = 140.0;
-
+boolean SHOW_SENSE_DISTANCE = true;
 // Standard deviation of mutations
 float MUT_SD = 1.0;
 
@@ -97,6 +97,12 @@ class Creature implements Positioned {
 
   void show() {
     noStroke();
+    
+    // Shows sense distance of creatures. 
+    if (SHOW_SENSE_DISTANCE) {
+      fill (0,255,255,50);
+      circle(this.pos.x, this.pos.y, this.senseDistance * 2);
+    }
     fill(this.col);
 
     // Head of creature.
@@ -122,6 +128,7 @@ class Creature implements Positioned {
     p3.add(this.pos);
 
     triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+
   }
 
   Creature makeBaby(float maxWidth, float maxHeight) {
