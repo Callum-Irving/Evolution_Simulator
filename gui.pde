@@ -82,6 +82,10 @@ public void popSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:popS
   w.minPopulation = popSlider.getValueI();
 } //_CODE_:popSlider:692723:
 
+public void showSenseChecked(GCheckbox source, GEvent event) { //_CODE_:checkbox1:983517:
+  SHOW_SENSE_DISTANCE = !SHOW_SENSE_DISTANCE;
+} //_CODE_:checkbox1:983517:
+
 
 
 // Create all the GUI controls. 
@@ -206,6 +210,12 @@ public void createGUI(){
   popSlider.setNumberFormat(G4P.INTEGER, 0);
   popSlider.setOpaque(false);
   popSlider.addEventHandler(this, "popSliderChanged");
+  checkbox1 = new GCheckbox(window1, 300, 390, 120, 20);
+  checkbox1.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
+  checkbox1.setText("Show sense");
+  checkbox1.setOpaque(false);
+  checkbox1.addEventHandler(this, "showSenseChecked");
+  checkbox1.setSelected(true);
   window1.loop();
 }
 
@@ -235,3 +245,4 @@ GLabel label10;
 GCustomSlider numFoodSlider; 
 GLabel label11; 
 GCustomSlider popSlider; 
+GCheckbox checkbox1; 
