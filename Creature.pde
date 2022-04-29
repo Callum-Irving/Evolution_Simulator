@@ -128,9 +128,9 @@ class Creature implements Positioned {
     p3.add(this.pos);
 
     triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
-
   }
 
+  // Make a slightly mutated copy of a creature.
   Creature makeBaby(float maxWidth, float maxHeight) {
     PVector pos = new PVector(random(maxWidth), random(maxHeight));
     PVector dir = PVector.fromAngle(random(TWO_PI));
