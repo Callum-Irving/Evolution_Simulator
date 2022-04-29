@@ -4,7 +4,7 @@ float SIZE_EXP;
 float INITIAL_ENERGY;
 float WANDER_STRENGTH;
 float BABY_THRESH;
-boolean SHOW_SENSE_DISTANCE = true;
+boolean SHOW_SENSE_DISTANCE = false;
 // Standard deviation of mutations
 float MUT_SD = 1.0;
 

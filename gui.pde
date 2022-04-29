@@ -216,7 +216,7 @@ public void createGUI(){
   checkbox1.setText("Show sense");
   checkbox1.setOpaque(false);
   checkbox1.addEventHandler(this, "showSenseChecked");
-  checkbox1.setSelected(true);
+  checkbox1.setSelected(false);
   window1.loop();
 }
 
