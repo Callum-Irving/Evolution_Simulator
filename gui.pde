@@ -72,6 +72,7 @@ public void predationCheckClicked(GCheckbox source, GEvent event) { //_CODE_:pre
 
 public void restartButtonClicked(GButton source, GEvent event) { //_CODE_:restartButton:956513:
   println("restartButton - GButton >> GEvent." + event + " @ " + millis());
+  w.resetPopulation();
 } //_CODE_:restartButton:956513:
 
 public void numFoodSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:numFoodSlider:406893:
