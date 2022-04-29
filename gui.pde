@@ -61,17 +61,10 @@ public void pauseButtonClicked(GButton source, GEvent event) { //_CODE_:pauseBut
 } //_CODE_:pauseButton:885390:
 
 public void predationCheckClicked(GCheckbox source, GEvent event) { //_CODE_:predationCheck:597874:
-  if (PREDATION) {
-    PREDATION = false;
-    println("Predation is now set to", PREDATION);
-  } else {
-    PREDATION = true;
-    println("Predation is now set to", PREDATION);
-  }
+  PREDATION = !PREDATION;
 } //_CODE_:predationCheck:597874:
 
 public void restartButtonClicked(GButton source, GEvent event) { //_CODE_:restartButton:956513:
-  println("restartButton - GButton >> GEvent." + event + " @ " + millis());
   w.resetPopulation();
 } //_CODE_:restartButton:956513:
 
