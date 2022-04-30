@@ -28,8 +28,12 @@ class World {
     for (int i = 0; i < numFood; i++)
       this.food.add(new FoodPellet(width, height));
   }
+  
+  synchronized void resetPopulation() {
+    this.population.clear();
+  }
 
-  void update(Metrics metrics) {
+  synchronized void update(Metrics metrics) {
     metrics.reset();
     // Create K-D tree to make nearest-neighbour checks quicker.
     //KDTree tree = new KDTree();

@@ -4,7 +4,7 @@ float SIZE_EXP;
 float INITIAL_ENERGY;
 float WANDER_STRENGTH;
 float BABY_THRESH;
-boolean SHOW_SENSE_DISTANCE = true;
+boolean SHOW_SENSE_DISTANCE = false;
 // Standard deviation of mutations
 float MUT_SD = 1.0;
 
@@ -128,9 +128,17 @@ class Creature implements Positioned {
     p3.add(this.pos);
 
     triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
-
+    
+    // Draw eye.
+    PVector eyePos = PVector.add(this.pos, PVector.mult(this.dir, this.size / 2));
+    fill(255);
+    circle(eyePos.x, eyePos.y, this.senseDistance / 3);
+    PVector pupilPos = PVector.add(eyePos, PVector.mult(this.dir, this.senseDistance / 12));
+    fill(0);
+    circle(pupilPos.x, pupilPos.y, this.senseDistance / 6);
   }
 
+  // Make a slightly mutated copy of a creature.
   Creature makeBaby(float maxWidth, float maxHeight) {
     PVector pos = new PVector(random(maxWidth), random(maxHeight));
     PVector dir = PVector.fromAngle(random(TWO_PI));
