@@ -61,15 +61,11 @@ public void pauseButtonClicked(GButton source, GEvent event) { //_CODE_:pauseBut
 } //_CODE_:pauseButton:885390:
 
 public void predationCheckClicked(GCheckbox source, GEvent event) { //_CODE_:predationCheck:597874:
-  if (PREDATION) {
-    PREDATION = false;
-  } else {
-    PREDATION = true;
-  }
+  PREDATION = !PREDATION;
 } //_CODE_:predationCheck:597874:
 
 public void restartButtonClicked(GButton source, GEvent event) { //_CODE_:restartButton:956513:
-  println("restartButton - GButton >> GEvent." + event + " @ " + millis());
+  w.population = new ArrayList<Creature>(populationSize);
 } //_CODE_:restartButton:956513:
 
 public void numFoodSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:numFoodSlider:406893:

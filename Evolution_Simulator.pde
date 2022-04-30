@@ -3,11 +3,12 @@ import g4p_controls.*;
 Metrics m;
 World w;
 boolean loop = true;
+int populationSize = 10;
 
 void setup() {
   size(1280, 720);
   //frameRate(15);
-  w = new World(width, height, 10, 10);
+  w = new World(width, height, 10, populationSize);
   m = new Metrics();
   createGUI();
   
