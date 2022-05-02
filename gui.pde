@@ -80,6 +80,10 @@ public void showSenseChecked(GCheckbox source, GEvent event) { //_CODE_:checkbox
   SHOW_SENSE_DISTANCE = !SHOW_SENSE_DISTANCE;
 } //_CODE_:checkbox1:983517:
 
+public void colourModeListClick(GDropList source, GEvent event) { //_CODE_:colourModeList:569553:
+  DRAW_MODE = colourModeList.getSelectedIndex();
+} //_CODE_:colourModeList:569553:
+
 
 
 // Create all the GUI controls. 
@@ -172,7 +176,7 @@ public void createGUI(){
   pauseButton.setText("Pause");
   pauseButton.setLocalColorScheme(GCScheme.RED_SCHEME);
   pauseButton.addEventHandler(this, "pauseButtonClicked");
-  predationCheck = new GCheckbox(window1, 268, 360, 78, 20);
+  predationCheck = new GCheckbox(window1, 200, 365, 78, 20);
   predationCheck.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
   predationCheck.setText("Predation");
   predationCheck.setOpaque(false);
@@ -206,12 +210,20 @@ public void createGUI(){
   popSlider.setNumberFormat(G4P.INTEGER, 0);
   popSlider.setOpaque(false);
   popSlider.addEventHandler(this, "popSliderChanged");
-  checkbox1 = new GCheckbox(window1, 268, 410, 94, 30);
+  checkbox1 = new GCheckbox(window1, 200, 408, 94, 30);
   checkbox1.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
   checkbox1.setText("Show Sense Distance");
   checkbox1.setOpaque(false);
   checkbox1.addEventHandler(this, "showSenseChecked");
-  checkbox1.setSelected(false);
+  checkbox1.setSelected(true);
+  colourModeList = new GDropList(window1, 320, 375, 90, 66, 2, 10);
+  colourModeList.setItems(loadStrings("list_569553"), 0);
+  colourModeList.setLocalColorScheme(GCScheme.PURPLE_SCHEME);
+  colourModeList.addEventHandler(this, "colourModeListClick");
+  label12 = new GLabel(window1, 322, 344, 84, 23);
+  label12.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  label12.setText("Colour Mode");
+  label12.setOpaque(false);
   window1.loop();
 }
 
@@ -242,3 +254,5 @@ GCustomSlider numFoodSlider;
 GLabel label11; 
 GCustomSlider popSlider; 
 GCheckbox checkbox1; 
+GDropList colourModeList; 
+GLabel label12; 

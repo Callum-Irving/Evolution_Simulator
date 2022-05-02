@@ -8,6 +8,8 @@ boolean SHOW_SENSE_DISTANCE = false;
 // Standard deviation of mutations
 float MUT_SD = 1.0;
 
+int DRAW_MODE = 0;
+
 class Creature implements Positioned {
   PVector pos;
   PVector dir;
@@ -94,7 +96,7 @@ class Creature implements Positioned {
     this.age++;
     return ateFood;
   }
-
+  
   void show() {
     noStroke();
     
@@ -103,8 +105,14 @@ class Creature implements Positioned {
       fill (0,255,255,50);
       circle(this.pos.x, this.pos.y, this.senseDistance * 2);
     }
-    fill(this.col.getColor());
-
+    
+    // Colour mode determines the colour of creatures.
+    if (DRAW_MODE == 0) {
+      fill(this.col.getColor());
+    } else {
+      
+    }
+    
     // Head of creature.
     float heading = this.dir.heading();
     arc(this.pos.x, this.pos.y, this.size * 2, this.size * 2, heading - HALF_PI, heading + HALF_PI, PIE);
