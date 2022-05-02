@@ -9,8 +9,12 @@ int populationSize = 10;
 float xOff = 0, yOff = 0;
 float scale = 1.0;
 
+PImage bg;
+
 void setup() {
   size(1280, 720);
+  bg = loadImage("minecraft_dirt.png");
+  bg.resize(width, height);
   w = new World(width, height, 10, populationSize);
   m = new Metrics();
   createGUI();
@@ -26,6 +30,6 @@ void setup() {
 }
 
 void draw() {
-  background(0);
+  background(bg);
   w.update(m);
 }

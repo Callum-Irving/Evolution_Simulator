@@ -13,7 +13,9 @@ class FoodPellet implements Positioned {
   }
 
   public void show() {
-    fill(0, 255, 0);
+    fill(150, 75, 0);
+    stroke(0);
+    strokeWeight(2);
     circle(this.pos.x, this.pos.y, this.foodValue * 2);
   }
 
