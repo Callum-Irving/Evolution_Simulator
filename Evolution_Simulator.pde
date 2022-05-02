@@ -11,7 +11,6 @@ float scale = 1.0;
 
 void setup() {
   size(1280, 720);
-  //frameRate(15);
   w = new World(width, height, 10, populationSize);
   m = new Metrics();
   createGUI();
@@ -27,32 +26,6 @@ void setup() {
 }
 
 void draw() {
-  scale(scale);
-  translate(xOff, yOff);
   background(0);
   w.update(m);
-}
-
-void mouseWheel(MouseEvent e) {
-  float value = e.getCount();
-  float prevX = mouseX();
-  float prevY = mouseY();
-  if (value < 0) {
-    scale *= 1.2;
-  } else if (value > 0) {
-    scale /= 1.2;
-  }
-  xOff -= (prevX - mouseX());
-  yOff -= (prevY - mouseY());
-}
-float mouseX() {
-  return mouseX / scale - xOff;
-}
-
-float mouseY() {
-  return mouseY / scale - yOff;
-}
-void mouseDragged() {
-  xOff -= (pmouseX - mouseX) / scale;
-  yOff -= (pmouseY - mouseY) / scale;
 }
