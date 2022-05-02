@@ -9,12 +9,6 @@ int populationSize = 10;
 float xOff = 0, yOff = 0;
 float scale = 1.0;
 
-// If true then the SHIFT key must be pressed to pan.
-static final boolean SHIFT_TO_PAN = true;
-
-// The mouse button used to pan.
-static final int PAN_BUTTON = LEFT;
-
 void setup() {
   size(1280, 720);
   //frameRate(15);
@@ -33,36 +27,32 @@ void setup() {
 }
 
 void draw() {
-  background(0);
-  w.update(m);
   scale(scale);
   translate(xOff, yOff);
+  background(0);
+  w.update(m);
 }
-//
-void zoom(float value) {
-  float prevX = this.mouseX();
-  float prevY = this.mouseY();
+
+void mouseWheel(MouseEvent e) {
+  float value = e.getCount();
+  float prevX = mouseX();
+  float prevY = mouseY();
   if (value < 0) {
     scale *= 1.2;
   } else if (value > 0) {
     scale /= 1.2;
   }
-  xOff -= (prevX - this.mouseX());
-  yOff -= (prevY - this.mouseY());
+  xOff -= (prevX - mouseX());
+  yOff -= (prevY - mouseY());
 }
 float mouseX() {
-  return mouseX / this.scale - this.xOff;
+  return mouseX / scale - xOff;
 }
 
 float mouseY() {
-  return mouseY / this.scale - this.yOff;
+  return mouseY / scale - yOff;
 }
-void dragged() {
-  if (mousePressed && mouseButton == PAN_BUTTON &&
-    (SHIFT_TO_PAN ? (keyPressed && keyCode == SHIFT) : true)) {
-    // Pan using middle mouse button. Can be changed to right click if you
-    // don't have a middle mouse button.
-    xOff -= (pmouseX - mouseX) / this.scale;
-    yOff -= (pmouseY - mouseY) / this.scale;
-  }
+void mouseDragged() {
+  xOff -= (pmouseX - mouseX) / scale;
+  yOff -= (pmouseY - mouseY) / scale;
 }
