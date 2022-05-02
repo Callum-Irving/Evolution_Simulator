@@ -109,7 +109,7 @@ class Creature implements Positioned {
     this.age++;
     return ateFood;
   }
-  
+
   void show() {
     noStroke();
 
@@ -118,14 +118,17 @@ class Creature implements Positioned {
       fill (0, 255, 255, 50);
       circle(this.pos.x, this.pos.y, this.senseDistance * 2);
     }
-    
+
     // Colour mode determines the colour of creatures.
     if (DRAW_MODE == 0) {
       fill(this.col.getColor());
     } else {
-      
+      colorMode(HSB);
+      float hue = sigmoid((this.age - 350) / 200) * 255;
+      fill(hue, 255, 255);
+      colorMode(RGB);
     }
-    
+
     // Head of creature.
     float heading = this.dir.heading();
     arc(this.pos.x, this.pos.y, this.size * 2, this.size * 2, heading - HALF_PI, heading + HALF_PI, PIE);

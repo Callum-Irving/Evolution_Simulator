@@ -17,3 +17,7 @@ class MutableColor {
     return color(this.r, this.g, this.b);
   }
 }
+
+float sigmoid(float x) {
+  return (float)(1 / (1 + Math.exp(-x)));
+}
