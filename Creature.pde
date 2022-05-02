@@ -46,8 +46,8 @@ class Creature implements Positioned {
   Creature(int maxWidth, int maxHeight) {
     this.pos = new PVector(random(maxWidth), random(maxHeight));
     this.dir = PVector.fromAngle(random(TWO_PI));
-    //this.senseDistance = random(25, 50);
-    this.senseDistance = random(100, 200);
+    this.senseDistance = random(25, 50);
+    //this.senseDistance = random(100, 200);
     this.speed = random(5, 15);
     this.size = random(5, 15);
     this.col = new MutableColor((int)random(255), (int)random(255), (int)random(255));
