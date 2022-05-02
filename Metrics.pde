@@ -51,6 +51,7 @@ class Metrics {
     this.size /= (float)this.numCreatures;
     this.age /= (float)this.numCreatures;
     this.energy /= (float)this.numCreatures;
+    if (this.numCreatures == 0) println("divide by 0 :(");
   }
 
   void log() {
