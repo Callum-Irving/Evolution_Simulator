@@ -51,7 +51,7 @@ public void pauseButtonClicked(GButton source, GEvent event) { //_CODE_:pauseBut
     noLoop();
     loop = false;
     pauseButton.setText("Resume");
-    pauseButton.setLocalColorScheme(6);
+    pauseButton.setLocalColorScheme(1);
   } else {
     loop();
     loop = true;
@@ -61,17 +61,10 @@ public void pauseButtonClicked(GButton source, GEvent event) { //_CODE_:pauseBut
 } //_CODE_:pauseButton:885390:
 
 public void predationCheckClicked(GCheckbox source, GEvent event) { //_CODE_:predationCheck:597874:
-  if (PREDATION) {
-    PREDATION = false;
-    println("Predation is now set to", PREDATION);
-  } else {
-    PREDATION = true;
-    println("Predation is now set to", PREDATION);
-  }
+  PREDATION = !PREDATION;
 } //_CODE_:predationCheck:597874:
 
 public void restartButtonClicked(GButton source, GEvent event) { //_CODE_:restartButton:956513:
-  println("restartButton - GButton >> GEvent." + event + " @ " + millis());
   w.resetPopulation();
 } //_CODE_:restartButton:956513:
 
@@ -96,15 +89,16 @@ public void createGUI(){
   G4P.setGlobalColorScheme(GCScheme.BLUE_SCHEME);
   G4P.setMouseOverEnabled(false);
   surface.setTitle("Sketch Window");
-  window1 = GWindow.getWindow(this, "Window title", 0, 0, 450, 550, JAVA2D);
+  window1 = GWindow.getWindow(this, "Evolution Control Panel", 0, 0, 450, 550, JAVA2D);
   window1.noLoop();
   window1.setActionOnClose(G4P.KEEP_OPEN);
   window1.addDrawHandler(this, "win_draw1");
-  label1 = new GLabel(window1, 150, 0, 125, 35);
+  label1 = new GLabel(window1, 162, 0, 109, 29);
   label1.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label1.setText("Creature Traits");
+  label1.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   label1.setOpaque(false);
-  senseSlider = new GCustomSlider(window1, 80, 50, 100, 40, "grey_blue");
+  senseSlider = new GCustomSlider(window1, 80, 50, 100, 45, "blue18px");
   senseSlider.setShowValue(true);
   senseSlider.setLimits(0.1, 0.0, 1.0);
   senseSlider.setNumberFormat(G4P.DECIMAL, 2);
@@ -118,7 +112,7 @@ public void createGUI(){
   label3.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label3.setText("Speed");
   label3.setOpaque(false);
-  speedSlider = new GCustomSlider(window1, 80, 125, 100, 40, "grey_blue");
+  speedSlider = new GCustomSlider(window1, 80, 125, 100, 45, "blue18px");
   speedSlider.setShowValue(true);
   speedSlider.setLimits(0.2, 0.0, 3.0);
   speedSlider.setNumberFormat(G4P.DECIMAL, 2);
@@ -128,17 +122,17 @@ public void createGUI(){
   label4.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label4.setText("Size");
   label4.setOpaque(false);
-  sizeSlider = new GCustomSlider(window1, 80, 200, 100, 40, "grey_blue");
+  sizeSlider = new GCustomSlider(window1, 80, 200, 100, 45, "blue18px");
   sizeSlider.setShowValue(true);
   sizeSlider.setLimits(0.7, 0.0, 5.0);
   sizeSlider.setNumberFormat(G4P.DECIMAL, 2);
   sizeSlider.setOpaque(false);
   sizeSlider.addEventHandler(this, "sizeSliderChanged");
-  label5 = new GLabel(window1, 101, 266, 80, 20);
+  label5 = new GLabel(window1, 112, 273, 80, 20);
   label5.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label5.setText("Initial Energy");
   label5.setOpaque(false);
-  iniEnergySlider = new GCustomSlider(window1, 193, 261, 100, 40, "grey_blue");
+  iniEnergySlider = new GCustomSlider(window1, 193, 261, 100, 45, "blue18px");
   iniEnergySlider.setShowValue(true);
   iniEnergySlider.setLimits(100.0, 0.0, 250.0);
   iniEnergySlider.setNumberFormat(G4P.DECIMAL, 2);
@@ -148,7 +142,7 @@ public void createGUI(){
   label6.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label6.setText("Wander Strength");
   label6.setOpaque(false);
-  wanderStrengthSlider = new GCustomSlider(window1, 305, 50, 100, 40, "grey_blue");
+  wanderStrengthSlider = new GCustomSlider(window1, 305, 50, 100, 45, "blue18px");
   wanderStrengthSlider.setShowValue(true);
   wanderStrengthSlider.setLimits(0.5, 0.0, 1.0);
   wanderStrengthSlider.setNumberFormat(G4P.DECIMAL, 2);
@@ -158,7 +152,7 @@ public void createGUI(){
   label7.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label7.setText("Baby Threshold");
   label7.setOpaque(false);
-  babyThresholdSlider = new GCustomSlider(window1, 305, 125, 100, 40, "grey_blue");
+  babyThresholdSlider = new GCustomSlider(window1, 305, 125, 100, 45, "blue18px");
   babyThresholdSlider.setShowValue(true);
   babyThresholdSlider.setLimits(140.0, 0.0, 250.0);
   babyThresholdSlider.setNumberFormat(G4P.DECIMAL, 2);
@@ -168,7 +162,7 @@ public void createGUI(){
   label8.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label8.setText("Mutation Rate");
   label8.setOpaque(false);
-  mutationRateSlider = new GCustomSlider(window1, 305, 200, 100, 40, "grey_blue");
+  mutationRateSlider = new GCustomSlider(window1, 305, 200, 100, 45, "blue18px");
   mutationRateSlider.setShowValue(true);
   mutationRateSlider.setLimits(1.0, 0.0, 2.0);
   mutationRateSlider.setNumberFormat(G4P.DECIMAL, 2);
@@ -178,7 +172,7 @@ public void createGUI(){
   pauseButton.setText("Pause");
   pauseButton.setLocalColorScheme(GCScheme.RED_SCHEME);
   pauseButton.addEventHandler(this, "pauseButtonClicked");
-  predationCheck = new GCheckbox(window1, 300, 360, 120, 20);
+  predationCheck = new GCheckbox(window1, 268, 360, 78, 20);
   predationCheck.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
   predationCheck.setText("Predation");
   predationCheck.setOpaque(false);
@@ -187,15 +181,16 @@ public void createGUI(){
   restartButton = new GButton(window1, 275, 500, 80, 30);
   restartButton.setText("Restart");
   restartButton.addEventHandler(this, "restartButtonClicked");
-  label9 = new GLabel(window1, 150, 310, 125, 35);
+  label9 = new GLabel(window1, 149, 311, 127, 35);
   label9.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label9.setText("Simulation Options");
+  label9.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   label9.setOpaque(false);
   label10 = new GLabel(window1, 0, 360, 80, 20);
   label10.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label10.setText("# of Food");
   label10.setOpaque(false);
-  numFoodSlider = new GCustomSlider(window1, 80, 350, 100, 40, "grey_blue");
+  numFoodSlider = new GCustomSlider(window1, 80, 350, 100, 45, "purple18px");
   numFoodSlider.setShowValue(true);
   numFoodSlider.setLimits(10, 0, 30);
   numFoodSlider.setNumberFormat(G4P.INTEGER, 0);
@@ -205,15 +200,15 @@ public void createGUI(){
   label11.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label11.setText("Population");
   label11.setOpaque(false);
-  popSlider = new GCustomSlider(window1, 80, 425, 100, 40, "grey_blue");
+  popSlider = new GCustomSlider(window1, 80, 425, 100, 45, "purple18px");
   popSlider.setShowValue(true);
   popSlider.setLimits(10, 10, 100);
   popSlider.setNumberFormat(G4P.INTEGER, 0);
   popSlider.setOpaque(false);
   popSlider.addEventHandler(this, "popSliderChanged");
-  checkbox1 = new GCheckbox(window1, 300, 390, 120, 20);
+  checkbox1 = new GCheckbox(window1, 268, 410, 94, 30);
   checkbox1.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
-  checkbox1.setText("Show sense");
+  checkbox1.setText("Show Sense Distance");
   checkbox1.setOpaque(false);
   checkbox1.addEventHandler(this, "showSenseChecked");
   checkbox1.setSelected(false);
