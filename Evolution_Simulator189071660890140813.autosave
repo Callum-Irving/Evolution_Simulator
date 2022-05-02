@@ -3,7 +3,6 @@ import g4p_controls.*;
 Metrics m;
 World w;
 boolean loop = true;
-int populationSize = 10;
 
 // Panning and zooming variables
 float xOff = 0, yOff = 0;
@@ -12,7 +11,7 @@ float scale = 1.0;
 void setup() {
   size(1280, 720);
   //frameRate(15);
-  w = new World(width, height, 10, populationSize);
+  w = new World(width, height, 10, 10);
   m = new Metrics();
   createGUI();
 
@@ -27,12 +26,15 @@ void setup() {
 }
 
 void draw() {
-  scale(scale);
-  translate(xOff, yOff);
   background(0);
+  scale(scale);
+  
+  // For pan and zoom 
+  translate(xOff, yOff);
   w.update(m);
 }
 
+// Zooming in and out
 void mouseWheel(MouseEvent e) {
   float value = e.getCount();
   float prevX = mouseX();
@@ -52,7 +54,9 @@ float mouseX() {
 float mouseY() {
   return mouseY / scale - yOff;
 }
+
+// Panning 
 void mouseDragged() {
-  xOff -= (pmouseX - mouseX) / scale;
-  yOff -= (pmouseY - mouseY) / scale;
-}
+    xOff -= (pmouseX - mouseX) / this.scale;
+    yOff -= (pmouseY - mouseY) / this.scale;
+  }
