@@ -9,8 +9,12 @@ int populationSize = 10;
 float xOff = 0, yOff = 0;
 float scale = 1.0;
 
+PImage bg;
+
 void setup() {
   size(1280, 720);
+  bg = loadImage("minecraft_dirt.png");
+  bg.resize(width, height);
   //frameRate(15);
   w = new World(width, height, 10, populationSize);
   m = new Metrics();
@@ -29,7 +33,7 @@ void setup() {
 void draw() {
   scale(scale);
   translate(xOff, yOff);
-  background(0);
+  background(bg);
   w.update(m);
 }
 
