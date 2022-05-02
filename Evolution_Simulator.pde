@@ -24,4 +24,5 @@ void setup() {
 void draw() {
   background(0);
   w.update(m);
+  println(m.avEnergy());
 }

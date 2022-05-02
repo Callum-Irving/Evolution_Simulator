@@ -44,7 +44,8 @@ class Creature implements Positioned {
   Creature(int maxWidth, int maxHeight) {
     this.pos = new PVector(random(maxWidth), random(maxHeight));
     this.dir = PVector.fromAngle(random(TWO_PI));
-    this.senseDistance = random(25, 50);
+    //this.senseDistance = random(25, 50);
+    this.senseDistance = random(100, 200);
     this.speed = random(5, 15);
     this.size = random(5, 15);
     this.col = new MutableColor((int)random(255), (int)random(255), (int)random(255));
@@ -59,7 +60,19 @@ class Creature implements Positioned {
   boolean update(ArrayList<Creature> population, Positioned nearestFood, float maxWidth, float maxHeight) {
     if (this.dead) return false;
 
-    boolean ateFood = false;
+    if (nearestFood == null) {
+      this.wander();
+      // Keep creature inside the world area.
+      this.constrainPos(0.0, 0.0, maxWidth, maxHeight);
+      // Make baby if energy and age are high enough
+      if (this.energy > BABY_THRESH) population.add(this.makeBaby(maxWidth, maxHeight));
+      this.energy -= this.calculateEnergyCost();
+      if (this.energy < 0) this.dead = true;
+      this.age++;
+      return false;
+    }
+
+    boolean ateFood = false;    
     float distance = PVector.dist(this.pos, nearestFood.getPosition());
 
     if (distance > this.senseDistance || nearestFood.eaten()) {
@@ -97,10 +110,10 @@ class Creature implements Positioned {
 
   void show() {
     noStroke();
-    
+
     // Shows sense distance of creatures. 
     if (SHOW_SENSE_DISTANCE) {
-      fill (0,255,255,50);
+      fill (0, 255, 255, 50);
       circle(this.pos.x, this.pos.y, this.senseDistance * 2);
     }
     fill(this.col.getColor());
@@ -128,7 +141,7 @@ class Creature implements Positioned {
     p3.add(this.pos);
 
     triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
-    
+
     // Draw eye.
     PVector eyePos = PVector.add(this.pos, PVector.mult(this.dir, this.size / 2));
     fill(255);
