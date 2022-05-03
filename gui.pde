@@ -19,50 +19,50 @@ synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:windo
 } //_CODE_:window1:891884:
 
 public void senseSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:senseSlider:947902:
-  SENSE_EXP = senseSlider.getValueF();
+  SENSE_EXP = source.getValueF();
 } //_CODE_:senseSlider:947902:
 
 public void speedSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:speedSlider:407313:
-  SPEED_EXP = speedSlider.getValueF();
+  SPEED_EXP = source.getValueF();
 } //_CODE_:speedSlider:407313:
 
 public void sizeSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:sizeSlider:310709:
-  SIZE_EXP = sizeSlider.getValueF();
+  SIZE_EXP = source.getValueF();
 } //_CODE_:sizeSlider:310709:
 
 public void iniEnergySliderChanged(GCustomSlider source, GEvent event) { //_CODE_:iniEnergySlider:854979:
-  INITIAL_ENERGY = iniEnergySlider.getValueF();
+  INITIAL_ENERGY = source.getValueF();
   // Make sure initial energy is lower than baby threshold
   INITIAL_ENERGY = min(INITIAL_ENERGY, BABY_THRESH - 1);
   source.setValue(INITIAL_ENERGY);
 } //_CODE_:iniEnergySlider:854979:
 
 public void wanderStrengthSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:wanderStrengthSlider:912690:
-  WANDER_STRENGTH = wanderStrengthSlider.getValueF();
+  WANDER_STRENGTH = source.getValueF();
 } //_CODE_:wanderStrengthSlider:912690:
 
 public void babyThresholdSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:babyThresholdSlider:259897:
-  BABY_THRESH = babyThresholdSlider.getValueF();
+  BABY_THRESH = source.getValueF();
   // Make sure baby threshold is higher than initial energy
   BABY_THRESH = max(INITIAL_ENERGY + 1, BABY_THRESH);
   source.setValue(BABY_THRESH);
 } //_CODE_:babyThresholdSlider:259897:
 
 public void mutationRateSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:mutationRateSlider:389455:
-  MUT_SD = mutationRateSlider.getValueF();
+  MUT_SD = source.getValueF();
 } //_CODE_:mutationRateSlider:389455:
 
 public void pauseButtonClicked(GButton source, GEvent event) { //_CODE_:pauseButton:885390:
   if (loop) {
     noLoop();
     loop = false;
-    pauseButton.setText("Resume");
-    pauseButton.setLocalColorScheme(1);
+    source.setText("Resume");
+    source.setLocalColorScheme(1);
   } else {
     loop();
     loop = true;
-    pauseButton.setText("Pause");
-    pauseButton.setLocalColorScheme(0);
+    source.setText("Pause");
+    source.setLocalColorScheme(0);
   }
 } //_CODE_:pauseButton:885390:
 
@@ -72,14 +72,15 @@ public void predationCheckClicked(GCheckbox source, GEvent event) { //_CODE_:pre
 
 public void restartButtonClicked(GButton source, GEvent event) { //_CODE_:restartButton:956513:
   w.resetPopulation();
+  resetGUI();
 } //_CODE_:restartButton:956513:
 
 public void numFoodSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:numFoodSlider:406893:
-  w.numFood = numFoodSlider.getValueI();
+  w.numFood = source.getValueI();
 } //_CODE_:numFoodSlider:406893:
 
 public void popSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:popSlider:692723:
-  w.minPopulation = popSlider.getValueI();
+  w.minPopulation = source.getValueI();
 } //_CODE_:popSlider:692723:
 
 public void showSenseChecked(GCheckbox source, GEvent event) { //_CODE_:checkbox1:983517:
@@ -87,8 +88,12 @@ public void showSenseChecked(GCheckbox source, GEvent event) { //_CODE_:checkbox
 } //_CODE_:checkbox1:983517:
 
 public void colourModeListClick(GDropList source, GEvent event) { //_CODE_:colourModeList:569553:
-  DRAW_MODE = colourModeList.getSelectedIndex();
+  DRAW_MODE = source.getSelectedIndex();
 } //_CODE_:colourModeList:569553:
+
+public void maxCreaturesSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:maxCreaturesSlider:210006:
+  MAX_CREATURES = source.getValueI();
+} //_CODE_:maxCreaturesSlider:210006:
 
 
 
@@ -178,7 +183,7 @@ public void createGUI(){
   mutationRateSlider.setNumberFormat(G4P.DECIMAL, 2);
   mutationRateSlider.setOpaque(false);
   mutationRateSlider.addEventHandler(this, "mutationRateSliderChanged");
-  pauseButton = new GButton(window1, 75, 500, 80, 30);
+  pauseButton = new GButton(window1, 211, 477, 80, 30);
   pauseButton.setText("Pause");
   pauseButton.setLocalColorScheme(GCScheme.RED_SCHEME);
   pauseButton.addEventHandler(this, "pauseButtonClicked");
@@ -188,7 +193,7 @@ public void createGUI(){
   predationCheck.setOpaque(false);
   predationCheck.addEventHandler(this, "predationCheckClicked");
   predationCheck.setSelected(true);
-  restartButton = new GButton(window1, 275, 500, 80, 30);
+  restartButton = new GButton(window1, 331, 476, 80, 30);
   restartButton.setText("Restart");
   restartButton.addEventHandler(this, "restartButtonClicked");
   label9 = new GLabel(window1, 149, 311, 127, 35);
@@ -206,11 +211,11 @@ public void createGUI(){
   numFoodSlider.setNumberFormat(G4P.INTEGER, 0);
   numFoodSlider.setOpaque(false);
   numFoodSlider.addEventHandler(this, "numFoodSliderChanged");
-  label11 = new GLabel(window1, 0, 435, 80, 20);
+  label11 = new GLabel(window1, 0, 415, 80, 20);
   label11.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label11.setText("Population");
   label11.setOpaque(false);
-  popSlider = new GCustomSlider(window1, 80, 425, 100, 45, "purple18px");
+  popSlider = new GCustomSlider(window1, 80, 405, 100, 45, "purple18px");
   popSlider.setShowValue(true);
   popSlider.setLimits(10, 10, 100);
   popSlider.setNumberFormat(G4P.INTEGER, 0);
@@ -229,6 +234,16 @@ public void createGUI(){
   label12.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label12.setText("Colour Mode");
   label12.setOpaque(false);
+  label13 = new GLabel(window1, 0, 460, 80, 40);
+  label13.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  label13.setText("Max population");
+  label13.setOpaque(false);
+  maxCreaturesSlider = new GCustomSlider(window1, 80, 460, 100, 50, "purple18px");
+  maxCreaturesSlider.setShowValue(true);
+  maxCreaturesSlider.setLimits(100, 10, 150);
+  maxCreaturesSlider.setNumberFormat(G4P.INTEGER, 0);
+  maxCreaturesSlider.setOpaque(false);
+  maxCreaturesSlider.addEventHandler(this, "maxCreaturesSliderChanged");
   window1.loop();
 }
 
@@ -261,3 +276,5 @@ GCustomSlider popSlider;
 GCheckbox checkbox1; 
 GDropList colourModeList; 
 GLabel label12; 
+GLabel label13; 
+GCustomSlider maxCreaturesSlider; 

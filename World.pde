@@ -41,7 +41,7 @@ class World {
       //Positioned nearest = tree.nearestNeighbour(c);
       //Positioned nearest = tree.findNearest(c);
       Positioned nearest = this.badNN(c);
-      boolean ateFood = c.update(babies, nearest, this.width, this.height);
+      boolean ateFood = c.update(this.population.size() + babies.size(), babies, nearest, this.width, this.height);
       if (ateFood) nearest.getEaten();
       c.show();
     }

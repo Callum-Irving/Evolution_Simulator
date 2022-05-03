@@ -1,3 +1,4 @@
+int MAX_CREATURES;
 float SENSE_EXP;
 float SPEED_EXP;
 float SIZE_EXP;
@@ -59,7 +60,7 @@ class Creature implements Positioned {
   // - Eat creature
   // - Move towards food/creature
   // - Move randomly
-  boolean update(ArrayList<Creature> population, Positioned nearestFood, float maxWidth, float maxHeight) {
+  boolean update(int populationSize, ArrayList<Creature> population, Positioned nearestFood, float maxWidth, float maxHeight) {
     if (this.dead) return false;
 
     if (nearestFood == null) {
@@ -67,7 +68,7 @@ class Creature implements Positioned {
       // Keep creature inside the world area.
       this.constrainPos(0.0, 0.0, maxWidth, maxHeight);
       // Make baby if energy and age are high enough
-      if (this.energy > BABY_THRESH) population.add(this.makeBaby(maxWidth, maxHeight));
+      if (this.energy > BABY_THRESH && populationSize < MAX_CREATURES) population.add(this.makeBaby(maxWidth, maxHeight));
       this.energy -= this.calculateEnergyCost();
       if (this.energy < 0) this.dead = true;
       this.age++;
@@ -101,7 +102,8 @@ class Creature implements Positioned {
     this.constrainPos(0.0, 0.0, maxWidth, maxHeight);
 
     // Make baby if energy and age are high enough
-    if (this.energy > BABY_THRESH) population.add(this.makeBaby(maxWidth, maxHeight));
+    if (this.energy > BABY_THRESH && populationSize < MAX_CREATURES)
+      population.add(this.makeBaby(maxWidth, maxHeight));
 
     // Use energy:
     this.energy -= this.calculateEnergyCost();
