@@ -5,10 +5,6 @@ World w;
 boolean loop = true;
 int populationSize = 10;
 
-// Panning and zooming variables
-float xOff = 0, yOff = 0;
-float scale = 1.0;
-
 PImage bg;
 
 void setup() {

@@ -215,7 +215,6 @@ public void createGUI(){
   checkbox1.setText("Show Sense Distance");
   checkbox1.setOpaque(false);
   checkbox1.addEventHandler(this, "showSenseChecked");
-  checkbox1.setSelected(true);
   colourModeList = new GDropList(window1, 320, 375, 90, 66, 2, 10);
   colourModeList.setItems(loadStrings("list_569553"), 0);
   colourModeList.setLocalColorScheme(GCScheme.PURPLE_SCHEME);
