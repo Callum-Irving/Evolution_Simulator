@@ -32,6 +32,9 @@ public void sizeSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:siz
 
 public void iniEnergySliderChanged(GCustomSlider source, GEvent event) { //_CODE_:iniEnergySlider:854979:
   INITIAL_ENERGY = iniEnergySlider.getValueF();
+  // Make sure initial energy is lower than baby threshold
+  INITIAL_ENERGY = min(INITIAL_ENERGY, BABY_THRESH - 1);
+  source.setValue(INITIAL_ENERGY);
 } //_CODE_:iniEnergySlider:854979:
 
 public void wanderStrengthSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:wanderStrengthSlider:912690:
@@ -40,6 +43,9 @@ public void wanderStrengthSliderChanged(GCustomSlider source, GEvent event) { //
 
 public void babyThresholdSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:babyThresholdSlider:259897:
   BABY_THRESH = babyThresholdSlider.getValueF();
+  // Make sure baby threshold is higher than initial energy
+  BABY_THRESH = max(INITIAL_ENERGY + 1, BABY_THRESH);
+  source.setValue(BABY_THRESH);
 } //_CODE_:babyThresholdSlider:259897:
 
 public void mutationRateSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:mutationRateSlider:389455:
@@ -158,7 +164,7 @@ public void createGUI(){
   label7.setOpaque(false);
   babyThresholdSlider = new GCustomSlider(window1, 305, 125, 100, 45, "blue18px");
   babyThresholdSlider.setShowValue(true);
-  babyThresholdSlider.setLimits(140.0, 0.0, 250.0);
+  babyThresholdSlider.setLimits(140.0, 100.0, 250.0);
   babyThresholdSlider.setNumberFormat(G4P.DECIMAL, 2);
   babyThresholdSlider.setOpaque(false);
   babyThresholdSlider.addEventHandler(this, "babyThresholdSliderChanged");
