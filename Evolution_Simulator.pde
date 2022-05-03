@@ -1,6 +1,5 @@
 import g4p_controls.*;
 
-Metrics m;
 World w;
 boolean loop = true;
 int populationSize = 10;
@@ -12,7 +11,6 @@ void setup() {
   bg = loadImage("minecraft_dirt.png");
   bg.resize(width, height);
   w = new World(width, height, 10, populationSize);
-  m = new Metrics();
   createGUI();
 
   // Setting initial values from GUI
@@ -27,5 +25,5 @@ void setup() {
 
 void draw() {
   background(bg);
-  w.update(m);
+  w.update();
 }
