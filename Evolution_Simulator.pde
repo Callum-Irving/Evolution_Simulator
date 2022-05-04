@@ -20,30 +20,30 @@ int MIN_CREATURES_INI = 10;
 int MAX_CREATURES_INI = 100;
 int NUM_FOOD_INI = 10;
 
-void resetGUI() {
-  senseSlider.setValue(SENSE_EXP_INI);
-  speedSlider.setValue(SPEED_EXP_INI);
-  sizeSlider.setValue(SIZE_EXP_INI);
-  iniEnergySlider.setValue(INITIAL_ENERGY_INI);
-  wanderStrengthSlider.setValue(WANDER_STRENGTH_INI);
-  babyThresholdSlider.setValue(BABY_THRESH_INI);
-  mutationRateSlider.setValue(MUT_SD_INI);
-  maxCreaturesSlider.setValue(MAX_CREATURES_INI);
-  minCreaturesSlider.setValue(MIN_CREATURES_INI);
-  numFoodSlider.setValue(NUM_FOOD_INI);
+void resetValues() {
+  SENSE_EXP = SENSE_EXP_INI;
+  SPEED_EXP = SPEED_EXP_INI;
+  SIZE_EXP = SIZE_EXP_INI;
+  INITIAL_ENERGY = INITIAL_ENERGY_INI;
+  WANDER_STRENGTH = WANDER_STRENGTH_INI;
+  BABY_THRESH = BABY_THRESH_INI;
+  MUT_SD = MUT_SD_INI;
+  MIN_CREATURES = MIN_CREATURES_INI;
+  MAX_CREATURES = MAX_CREATURES_INI;
+  NUM_FOOD = NUM_FOOD_INI;
 }
 
 void syncGUI() {
-  SENSE_EXP = senseSlider.getValueF();
-  SPEED_EXP = speedSlider.getValueF();
-  SIZE_EXP = sizeSlider.getValueF();
-  INITIAL_ENERGY = iniEnergySlider.getValueF();
-  WANDER_STRENGTH = wanderStrengthSlider.getValueF();
-  BABY_THRESH = babyThresholdSlider.getValueF();
-  MUT_SD = mutationRateSlider.getValueF();
-  MAX_CREATURES = maxCreaturesSlider.getValueI();
-  MIN_CREATURES = minCreaturesSlider.getValueI();
-  NUM_FOOD = numFoodSlider.getValueI();
+  senseSlider.setValue(SENSE_EXP);
+  speedSlider.setValue(SPEED_EXP);
+  sizeSlider.setValue(SIZE_EXP);
+  iniEnergySlider.setValue(INITIAL_ENERGY);
+  wanderStrengthSlider.setValue(WANDER_STRENGTH);
+  babyThresholdSlider.setValue(BABY_THRESH);
+  mutationRateSlider.setValue(MUT_SD);
+  maxCreaturesSlider.setValue(MAX_CREATURES);
+  minCreaturesSlider.setValue(MIN_CREATURES);
+  numFoodSlider.setValue(NUM_FOOD);
 }
 
 void setup() {
@@ -52,7 +52,7 @@ void setup() {
   bg.resize(width, height);
   w = new World(width, height, 10, MIN_CREATURES);
   createGUI();
-  resetGUI();
+  resetValues();
   syncGUI();
 }
 
