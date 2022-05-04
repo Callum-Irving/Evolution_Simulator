@@ -5,20 +5,11 @@ class World {
   ArrayList<FoodPellet> food;
   ArrayList<Creature> population;
 
-  // If too many creatures die, this population will be maintained.
-  int minPopulation;
-
-  // The constant number of food pellets. If one is eaten, a new one
-  // is created.
-  int numFood;
-
   World(int width, int height, int numFood, int populationSize) {
     this.width = width;
     this.height = height;
-    this.numFood = numFood;
     this.food = new ArrayList<FoodPellet>(numFood);
     this.population = new ArrayList<Creature>(populationSize);
-    this.minPopulation = populationSize;
 
     // Initialize population
     for (int i = 0; i < populationSize; i++)
@@ -61,11 +52,11 @@ class World {
       if (this.food.get(i).eaten()) this.food.remove(i);
 
     // Keep population at minimum amount.
-    while (this.population.size() < this.minPopulation)
+    while (this.population.size() < MIN_CREATURES)
       this.population.add(new Creature(this.width, this.height));
 
     // Keep food at minimum amount.
-    while (this.food.size() < this.numFood)
+    while (this.food.size() < NUM_FOOD)
       this.food.add(new FoodPellet(this.width, this.height));
   }
 

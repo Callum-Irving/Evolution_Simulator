@@ -1,4 +1,3 @@
-int MAX_CREATURES;
 float SENSE_EXP;
 float SPEED_EXP;
 float SIZE_EXP;

@@ -76,12 +76,12 @@ public void restartButtonClicked(GButton source, GEvent event) { //_CODE_:restar
 } //_CODE_:restartButton:956513:
 
 public void numFoodSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:numFoodSlider:406893:
-  w.numFood = source.getValueI();
+  NUM_FOOD = source.getValueI();
 } //_CODE_:numFoodSlider:406893:
 
-public void popSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:popSlider:692723:
-  w.minPopulation = source.getValueI();
-} //_CODE_:popSlider:692723:
+public void minCreaturesSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:minCreaturesSlider:692723:
+  MIN_CREATURES = source.getValueI();
+} //_CODE_:minCreaturesSlider:692723:
 
 public void showSenseChecked(GCheckbox source, GEvent event) { //_CODE_:checkbox1:983517:
   SHOW_SENSE_DISTANCE = !SHOW_SENSE_DISTANCE;
@@ -211,16 +211,16 @@ public void createGUI(){
   numFoodSlider.setNumberFormat(G4P.INTEGER, 0);
   numFoodSlider.setOpaque(false);
   numFoodSlider.addEventHandler(this, "numFoodSliderChanged");
-  label11 = new GLabel(window1, 0, 415, 80, 20);
+  label11 = new GLabel(window1, 0, 407, 80, 40);
   label11.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  label11.setText("Population");
+  label11.setText("Min population");
   label11.setOpaque(false);
-  popSlider = new GCustomSlider(window1, 80, 405, 100, 45, "purple18px");
-  popSlider.setShowValue(true);
-  popSlider.setLimits(10, 10, 100);
-  popSlider.setNumberFormat(G4P.INTEGER, 0);
-  popSlider.setOpaque(false);
-  popSlider.addEventHandler(this, "popSliderChanged");
+  minCreaturesSlider = new GCustomSlider(window1, 80, 405, 100, 45, "purple18px");
+  minCreaturesSlider.setShowValue(true);
+  minCreaturesSlider.setLimits(10, 10, 100);
+  minCreaturesSlider.setNumberFormat(G4P.INTEGER, 0);
+  minCreaturesSlider.setOpaque(false);
+  minCreaturesSlider.addEventHandler(this, "minCreaturesSliderChanged");
   checkbox1 = new GCheckbox(window1, 200, 408, 94, 30);
   checkbox1.setIconAlign(GAlign.LEFT, GAlign.MIDDLE);
   checkbox1.setText("Show Sense Distance");
@@ -234,7 +234,7 @@ public void createGUI(){
   label12.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label12.setText("Colour Mode");
   label12.setOpaque(false);
-  label13 = new GLabel(window1, 0, 460, 80, 40);
+  label13 = new GLabel(window1, 0, 465, 80, 40);
   label13.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label13.setText("Max population");
   label13.setOpaque(false);
@@ -272,7 +272,7 @@ GLabel label9;
 GLabel label10; 
 GCustomSlider numFoodSlider; 
 GLabel label11; 
-GCustomSlider popSlider; 
+GCustomSlider minCreaturesSlider; 
 GCheckbox checkbox1; 
 GDropList colourModeList; 
 GLabel label12; 
