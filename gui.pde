@@ -81,6 +81,9 @@ public void numFoodSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:
 
 public void minCreaturesSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:minCreaturesSlider:692723:
   MIN_CREATURES = source.getValueI();
+  // Make sure min creatures < max creatures
+  MIN_CREATURES = min(MIN_CREATURES, MAX_CREATURES - 1);
+  source.setValue(MIN_CREATURES);
 } //_CODE_:minCreaturesSlider:692723:
 
 public void showSenseChecked(GCheckbox source, GEvent event) { //_CODE_:checkbox1:983517:
@@ -93,6 +96,9 @@ public void colourModeListClick(GDropList source, GEvent event) { //_CODE_:colou
 
 public void maxCreaturesSliderChanged(GCustomSlider source, GEvent event) { //_CODE_:maxCreaturesSlider:210006:
   MAX_CREATURES = source.getValueI();
+  // Make sure max creatures > min creatures
+  MAX_CREATURES = max(MAX_CREATURES, MIN_CREATURES + 1);
+  source.setValue(MAX_CREATURES);
 } //_CODE_:maxCreaturesSlider:210006:
 
 
@@ -240,7 +246,7 @@ public void createGUI(){
   label13.setOpaque(false);
   maxCreaturesSlider = new GCustomSlider(window1, 80, 460, 100, 50, "purple18px");
   maxCreaturesSlider.setShowValue(true);
-  maxCreaturesSlider.setLimits(100, 10, 150);
+  maxCreaturesSlider.setLimits(100, 15, 150);
   maxCreaturesSlider.setNumberFormat(G4P.INTEGER, 0);
   maxCreaturesSlider.setOpaque(false);
   maxCreaturesSlider.addEventHandler(this, "maxCreaturesSliderChanged");
