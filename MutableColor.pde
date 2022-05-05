@@ -1,3 +1,4 @@
+// This class is used to store a color that can be easily changed slightly.
 class MutableColor {
   int r, g, b;
   

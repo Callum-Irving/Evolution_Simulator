@@ -1,11 +1,15 @@
+// Exponents effecting energy cost.
 float SENSE_EXP;
 float SPEED_EXP;
 float SIZE_EXP;
+
 float INITIAL_ENERGY;
+// How randomly the creatures move.
 float WANDER_STRENGTH;
+// The minimum amount of energy for a creature to make a baby.
 float BABY_THRESH;
 boolean SHOW_SENSE_DISTANCE = false;
-// Standard deviation of mutations
+// Standard deviation of mutations. The higher this is, the bigger the mutations.
 float MUT_SD = 1.0;
 
 int DRAW_MODE = 0;
@@ -18,7 +22,6 @@ class Creature implements Positioned {
   float senseDistance;
   float speed;
   float size;
-  // Using HSB color scheme
   MutableColor col;
 
   // When energy hits 0, the creature dies.
@@ -42,23 +45,23 @@ class Creature implements Positioned {
   }
 
   // Random constructor.
-  // TODO: Make random ranges parametric.
   Creature(int maxWidth, int maxHeight) {
     this.pos = new PVector(random(maxWidth), random(maxHeight));
     this.dir = PVector.fromAngle(random(TWO_PI));
     this.senseDistance = random(25, 50);
-    //this.senseDistance = random(100, 200);
     this.speed = random(5, 15);
     this.size = random(5, 15);
     this.col = new MutableColor((int)random(255), (int)random(255), (int)random(255));
     this.generation = 0;
   }
 
+  // This function is called for each frame of the simulation.
   // Actions a creature can take:
   // - Eat food
   // - Eat creature
   // - Move towards food/creature
   // - Move randomly
+  // - Make baby
   boolean update(int populationSize, ArrayList<Creature> population, Positioned nearestFood, float maxWidth, float maxHeight) {
     if (this.dead) return false;
 
@@ -111,6 +114,7 @@ class Creature implements Positioned {
     return ateFood;
   }
 
+  // Draw the creature.
   void show() {
     noStroke();
 
@@ -173,13 +177,12 @@ class Creature implements Positioned {
     int generation = this.generation + 1;
     MutableColor col = new MutableColor(this.col);
 
-    // TODO: Make this value a variable somehow.
     this.energy -= 70;
 
     return new Creature(pos, dir, senseDistance, speed, size, generation, col);
   }
 
-  // Returns the cost per time step.
+  // Returns the energy cost per time step.
   float calculateEnergyCost() {
     return 0.005 * pow(this.senseDistance, SENSE_EXP) * pow(this.speed, SPEED_EXP) * pow(this.size, SIZE_EXP);
   }
@@ -201,11 +204,11 @@ class Creature implements Positioned {
   }
 
   private void wander() {
-    // TODO: Try out randomGaussian to see if it looks more natural.
     this.dir.rotate(random(-WANDER_STRENGTH, WANDER_STRENGTH));
     this.pos.add(PVector.mult(this.dir, this.speed));
   }
 
+  // Keep the creature inside the window.
   private void constrainPos(float minX, float minY, float maxX, float maxY) {
     if (this.pos.x < minX) {
       this.pos.x = minX;
@@ -224,10 +227,12 @@ class Creature implements Positioned {
     }
   }
 
+  // Returns true if other can eat this creature.
   private boolean canEatUs(Creature other) {
     return other.getRadius() > this.size * 1.2;
   }
 
+  // Returns true if this creature can eat other.
   private boolean canEat(Positioned other) {
     if (other instanceof Creature && other.getRadius() * 1.2 >= this.size) return false;
     return true;

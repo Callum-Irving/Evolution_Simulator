@@ -29,9 +29,7 @@ class World {
 
     // Update each creature
     for (Creature c : this.population) {
-      //Positioned nearest = tree.nearestNeighbour(c);
-      //Positioned nearest = tree.findNearest(c);
-      Positioned nearest = this.badNN(c);
+      Positioned nearest = this.nearestNeighbour(c);
       boolean ateFood = c.update(this.population.size() + babies.size(), babies, nearest, this.width, this.height);
       if (ateFood) nearest.getEaten();
       c.show();
@@ -60,10 +58,12 @@ class World {
       this.food.add(new FoodPellet(this.width, this.height));
   }
 
-  Positioned badNN(Creature c) {
+  // Returns the closest creature or food pellet to c.
+  Positioned nearestNeighbour(Creature c) {
     Positioned best = null;
     float bestDist = Float.MAX_VALUE;
 
+    // Only check other creatures if predation is enabled.
     if (PREDATION) {
       for (Creature other : this.population) {
         if (other == c) continue;

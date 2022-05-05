@@ -20,6 +20,7 @@ int MIN_CREATURES_INI = 10;
 int MAX_CREATURES_INI = 100;
 int NUM_FOOD_INI = 10;
 
+// Set all user-adjustable parameters to their defaults.
 void resetValues() {
   SENSE_EXP = SENSE_EXP_INI;
   SPEED_EXP = SPEED_EXP_INI;
@@ -33,6 +34,7 @@ void resetValues() {
   NUM_FOOD = NUM_FOOD_INI;
 }
 
+// Set the sliders on the GUI to the values stored in the program.
 void syncGUI() {
   senseSlider.setValue(SENSE_EXP);
   speedSlider.setValue(SPEED_EXP);
