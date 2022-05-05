@@ -1,17 +1,15 @@
 class FoodPellet implements Positioned {
   PVector pos;
+  // The amount of energy stored in the food.
   float foodValue;
   boolean eaten = false;
 
-  FoodPellet( PVector pos, float foodValue ) {
-    this.pos = pos;
-    this.foodValue = foodValue;
-  }
-  FoodPellet (int maxWidth, int maxHeight) {
+  FoodPellet(int maxWidth, int maxHeight) {
     this.pos = new PVector (random(maxWidth), random(maxHeight));
     this.foodValue = random(4, 10);
   }
 
+  // Draw the food pellet to the screen.
   public void show() {
     fill(150, 75, 0);
     stroke(0);
